@@ -1,0 +1,264 @@
+/* style.css */
+@font-face {
+    font-family: 'PFStardust';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #ffdaf0;
+    font-family: 'PFStardust', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    touch-action: none;
+    cursor: url('bubblewand_cursor.png'), auto;
+    /* Prevent scroll on touch devices */
+}
+
+#instructions {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 5;
+    /* text-shadow: 0 2px 10px rgba(0,0,0,0.5); */
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.head-img {
+    height: 4.5rem;
+    object-fit: contain;
+}
+
+#instructions h2 {
+    font-size: 4rem;
+    margin: 0;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-family: "Bitcount Prop Double Ink", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    color: #ff178b;
+    white-space: nowrap;
+}
+
+#instructions p {
+    font-size: 1.15rem;
+    margin: 0;
+    font-weight: 450;
+    line-height: 1.5;
+    color: #20252d;
+}
+
+#detergent-bg {
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    height: auto;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#bubble-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    background-image: url('bubble.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: url('bubblewand_cursor.png'), pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: center center;
+}
+
+
+.bubble:hover {
+    transform: scale(1.1);
+}
+
+.bubble span {
+    pointer-events: none;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+
+/* 터짐(Pop) 애니메이션 */
+.pop-animation {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    animation: pop 0.4s ease-out forwards;
+    pointer-events: none;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 80%);
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        border-width: 4px;
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 0.8;
+        border-width: 8px;
+    }
+
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+        border-width: 0px;
+    }
+}
+
+/* 점선 말풍선 (Tooltip) */
+.bubble-tooltip {
+    position: absolute;
+    bottom: 110%;
+    /* 비눗방울 위쪽으로 띄움 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 220px;
+    padding: 12px 18px;
+    background: #ffffff;
+    border: 2px dashed #ffdff2;
+    /* 점선 테두리 */
+    border-radius: 15px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ff0088;
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease forwards;
+    text-align: center;
+    word-break: keep-all;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* 말풍선 꼬리 */
+.bubble-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 10px solid #ffdff2;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+
+.bubble-tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 10px solid #ffffff;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    z-index: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+}
+
+/* 아래쪽으로 열리는 툴팁 (상단 아이템용) */
+.bubble-tooltip.tooltip-bottom {
+    bottom: auto;
+    top: 110%;
+    animation: fadeInBottom 0.3s ease forwards;
+}
+
+.bubble-tooltip.tooltip-bottom::after {
+    bottom: auto;
+    top: -10px;
+    border-top: none;
+    border-bottom: 10px solid #ffdff2;
+}
+
+.bubble-tooltip.tooltip-bottom::before {
+    bottom: auto;
+    top: -7px;
+    border-top: none;
+    border-bottom: 10px solid #ffffff;
+}
+
+@keyframes fadeInBottom {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes fadeOutBottom {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+    }
+}
